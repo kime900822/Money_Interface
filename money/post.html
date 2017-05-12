@@ -14,8 +14,8 @@
             $.ajax({
                 type: 'POST',
                 async: false,
-                url: "http://localhost:49916/api/User/login",
-                data: { telephone: '88888888888', pass_word: '888888' },
+                url: "http://localhost:49916/api/Product/queryProduct_date",
+                data: { date: '2017-05-12', type: 'month' },
                 dataType: "json",
                 success: function (result) {
                     alert(result.message)

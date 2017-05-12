@@ -97,4 +97,3 @@ D:\visual studio 2015\Projects\Money_Interface\money\bin\zh-Hans\Microsoft.Owin.
 D:\visual studio 2015\Projects\Money_Interface\money\bin\zh-Hans\System.Web.Http.Owin.resources.dll
 D:\visual studio 2015\Projects\Money_Interface\money\obj\Debug\money.dll
 D:\visual studio 2015\Projects\Money_Interface\money\obj\Debug\money.pdb
-D:\visual studio 2015\Projects\Money_Interface\money\obj\Debug\money.csprojResolveAssemblyReference.cache

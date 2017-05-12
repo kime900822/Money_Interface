@@ -162,6 +162,44 @@ namespace money.Controllers
 
 
         [HttpPost]
+        [Route("queryProduct_date")]
+        public HttpResponseMessage queryProduct_date([FromBody]PRODUCT_DATE_PARAMETER  p)
+        {
+            Result<PRODUCT> ru = new Result<PRODUCT>();
+            List<PRODUCT> lproduct = new List<PRODUCT>();
+
+            try
+            {
+                lproduct = DB_Product.getProduct(p.date,p.type);
+
+                if (lproduct.Count > 0)
+                {
+                    ru.code = "3030";
+                    ru.success = "true";
+                    ru.message = "获取成功！";
+                }
+                else
+                {
+                    ru.code = "3031";
+                    ru.success = "false";
+                    ru.message = "无数据";
+                }
+            }
+            catch (Exception e)
+            {
+                ru.code = "3032";
+                ru.success = "false";
+                ru.message = e.Message;
+            }
+
+            ru.systemTime = Conn.GetTimeStamp();
+            ru.data = lproduct;
+
+            return Conn.toJson(ru);
+        }
+
+
+        [HttpPost]
         [Route("queryProductAll")]
         public HttpResponseMessage queryProductAll()
         {

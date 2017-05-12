@@ -137,6 +137,38 @@ namespace Money_Interface.DBHelp
 
         }
 
+        /// <summary>
+        /// 根据日期查询
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static List<PRODUCT> getProduct(string date,string type)
+        {
+            using (SqlConnection conn = new SqlConnection(Conn.connString))
+            {
+                conn.Open();
+                string sqlwhere ;
+                if (type == "month")
+                {
+                    sqlwhere = string.Format(@" SUBSTRING(DATE,1,7) = '{0}'", date.Substring(0,7));
+                }
+                else {
+                    sqlwhere = string.Format(@" SUBSTRING(DATE,1,4) = '{0}'", date.Substring(0, 4));
+                }
+
+                string sql = string.Format("select * from T_PRODUCT where ID IN (SELECT DISTINCT PID FROM T_CREDIT WHERE {0})", sqlwhere);
+                DataTable dt = new DataTable();
+                SqlDataAdapter da = new SqlDataAdapter(sql, conn);
+                da.Fill(dt);
+                return DataToProduct(dt);
+
+
+
+            }
+
+        }
+
 
         public static PRODUCT C_Product(string id)
         {

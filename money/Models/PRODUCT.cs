@@ -13,4 +13,10 @@ namespace Money_Interface.Models
         public string uid { get; set; }
 
     }
+
+    public class PRODUCT_DATE_PARAMETER {
+        public string date { get; set; }
+        public string type { get; set; }
+
+    }
 }
