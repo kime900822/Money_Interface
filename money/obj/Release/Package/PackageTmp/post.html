@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="js/jquery-1.6.4.js"></script>
+    <script type="text/javascript">
+
+    
+        function post() {
+            var url = $("#url").val();
+            var data = $("#data").val();
+            $.ajax({
+                type: 'POST',
+                async: false,
+                url: "http://localhost:49916/api/User/login",
+                data: { telephone: '88888888888', pass_word: '888888' },
+                dataType: "json",
+                success: function (result) {
+                    alert(result.message)
+                    $("#span").html(result);
+                },
+                error: function (e) {
+                    alert(e.responseText);
+                }
+            });
+
+        }
+
+
+
+    </script>
+</head>
+<body>
+    <p>输入请求地址</p>
+    <input type="text" id="url" /><br />
+    <p>输入请求参数</p>
+    <input type="text" id="data" /><br />
+    <input type="button" id="button" value="发送" onclick="post()" />
+    <span id="span"></span>
+</body>
+</html>
