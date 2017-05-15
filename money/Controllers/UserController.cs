@@ -93,7 +93,7 @@ namespace Money_Interface.Controllers
                 ru.success = "false";
                 ru.message = e.Message;
             }
-
+            lu.Add(u);
             ru.systemTime = Conn.GetTimeStamp();
             ru.data = lu;
 
