@@ -49,22 +49,37 @@ namespace Money_Interface.DBHelp
         /// </summary>
         /// <param name="u"></param>
         /// <returns></returns>
-        public static int register(USER u) {
+        public static int register(USER u, out string oid) {
             using (SqlConnection conn = new SqlConnection(Conn.connString))
             {
                 conn.Open();
+                oid = null;
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
 
-                        cmd.CommandText = string.Format(@"select count(*) from T_USER where TELEPHONE='{0}'",
+                    cmd.CommandText = string.Format("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;SELECT MAX(ID) from T_USER where SUBSTRING(ID,1,8)='{0}';", DateTime.Now.ToString("yyyyMMdd"));
+                    string id = string.Empty;
+                    id = cmd.ExecuteScalar().ToString();
+                    if (!string.IsNullOrEmpty(id))
+                    {
+                        u.id = (Convert.ToInt64(id) + 1).ToString();
+                    }
+                    else
+                    {
+                        u.id = DateTime.Now.ToString("yyyyMMdd") + "0001";
+                    }
+
+
+                    oid = id;
+                    cmd.CommandText = string.Format(@"select count(*) from T_USER where TELEPHONE='{0}'",
                      u.telephone);
 
                         if (Convert.ToInt16(cmd.ExecuteScalar().ToString()) > 0) {
                             return -1;
                         }
 
-                        cmd.CommandText = string.Format(@"insert into T_USER (TELEPHONE,PASS_WORD,PHONE,NAME) VALUES ('{0}','{1}',N'{2}',N'{3}')",
-                      u.telephone, u.pass_word,u.phone,u.name);
+                        cmd.CommandText = string.Format(@"insert into T_USER (TELEPHONE,PASS_WORD,PHONE,NAME,ID) VALUES ('{0}','{1}',N'{2}',N'{3}',{4})",
+                      u.telephone, u.pass_word,u.phone,u.name,u.id);
                         return cmd.ExecuteNonQuery();
 
                 }
@@ -86,8 +101,16 @@ namespace Money_Interface.DBHelp
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
 
-                        cmd.CommandText = string.Format(@"update T_USER set PASS_WORD='{0}',BALANCE={1},PHONE=N'{2}',NAME='{3}',MONTH_IN={4},YEAR_IN={5},MONTH_OUT={6},YEAR_OUT={7} where TELEPHONE='{8}' ",
-                      u.pass_word, Convert.ToDecimal(u.balance),u.phone,u.name,Convert.ToDecimal(u.month_in), Convert.ToDecimal(u.month_out), Convert.ToDecimal(u.year_in), Convert.ToDecimal(u.year_out), u.telephone);
+                    if (!string.IsNullOrEmpty(u.telephone)) {
+                        cmd.CommandText = string.Format(@"select count(*) from T_USER where TELEPHONE='{0}'", u.telephone);
+
+                        if (Convert.ToInt16(cmd.ExecuteScalar().ToString()) > 0)
+                        {
+                            return -1;
+                        }
+                    }
+                        cmd.CommandText = string.Format(@"update T_USER set PASS_WORD='{0}',BALANCE={1},PHONE=N'{2}',NAME='{3}',MONTH_IN={4},YEAR_IN={5},MONTH_OUT={6},YEAR_OUT={7}, TELEPHONE='{8}' where id='{9}' ",
+                      u.pass_word, Convert.ToDecimal(u.balance),u.phone,u.name,Convert.ToDecimal(u.month_in), Convert.ToDecimal(u.month_out), Convert.ToDecimal(u.year_in), Convert.ToDecimal(u.year_out), u.telephone,u.id);
                         return cmd.ExecuteNonQuery();
 
                 }
@@ -109,8 +132,8 @@ namespace Money_Interface.DBHelp
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
 
-                        cmd.CommandText = string.Format(@"delete T_USER where TELEPHONE='{0}' ",
-                      u.telephone);
+                        cmd.CommandText = string.Format(@"delete T_USER where ID='{0}' ",
+                      u.id);
                         return cmd.ExecuteNonQuery();
 
                 }
@@ -162,7 +185,8 @@ namespace Money_Interface.DBHelp
                         month_in = Convert.ToDecimal(dt.Rows[i]["MONTH_IN"].ToString()),
                         year_in = Convert.ToDecimal(dt.Rows[i]["YEAR_IN"].ToString()),
                         month_out = Convert.ToDecimal(dt.Rows[i]["MONTH_OUT"].ToString()),
-                        year_out = Convert.ToDecimal(dt.Rows[i]["YEAR_OUT"].ToString())
+                        year_out = Convert.ToDecimal(dt.Rows[i]["YEAR_OUT"].ToString()),
+                        id= dt.Rows[i]["ID"].ToString(),
                     };
                     list.Add(d);
                 }

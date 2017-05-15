@@ -41,7 +41,7 @@ namespace money.DBHelp
                         int r = cmd.ExecuteNonQuery();
                         if (r == 1)
                         {
-                            cmd.CommandText = string.Format(@"UPDATE T_USER SET BALANCE=BALANCE+{0} WHERE TELEPHONE='{1}' ", Convert.ToDecimal(a.amount), a.uid);
+                            cmd.CommandText = string.Format(@"UPDATE T_USER SET BALANCE=BALANCE+{0} WHERE ID='{1}' ", Convert.ToDecimal(a.amount), a.uid);
                             cmd.ExecuteNonQuery();
                             transaction.Commit();
                         }

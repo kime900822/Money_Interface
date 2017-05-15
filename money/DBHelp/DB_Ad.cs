@@ -49,7 +49,7 @@ namespace money.DBHelp
                         int r = cmd.ExecuteNonQuery();
                         if (r == 1)
                         {
-                            cmd.CommandText = string.Format(@"UPDATE T_USER set BALANCE=BALANCE-10 where TELEPHONE='{0}' ", a.uid);
+                            cmd.CommandText = string.Format(@"UPDATE T_USER set BALANCE=BALANCE-10 where ID='{0}' ", a.uid);
                             cmd.ExecuteNonQuery();
                             transaction.Commit();
                         }

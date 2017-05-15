@@ -8,8 +8,8 @@ namespace Money_Interface.Models
     public class USER
     {
 
+        public string id { get; set; }
         public string telephone { get; set; }
-
         public string pass_word { get; set; }
         public string phone { get; set; }
         public string name { get; set; }

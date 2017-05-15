@@ -60,16 +60,20 @@ namespace Money_Interface.Controllers
         {
             Result<USER> ru = new Result<USER>();
             int result = 0;
+            string id;
+            List<USER> lu = new List<USER>();
+
 
             try
             {
-                result = DB_User.register(u);
+                result = DB_User.register(u,out id);
 
                 if (result == 1)
                 {
                     ru.code = "2010";
                     ru.success = "true";
                     ru.message = "注册成功！";
+                    u.id = id;
                 }
                 else if (result == -1)
                 {
@@ -91,7 +95,7 @@ namespace Money_Interface.Controllers
             }
 
             ru.systemTime = Conn.GetTimeStamp();
-            ru.data = null;
+            ru.data = lu;
 
             return Conn.toJson(ru);
         }
@@ -147,6 +151,11 @@ namespace Money_Interface.Controllers
                     ru.code = "2030";
                     ru.success = "true";
                     ru.message = "修改成功！";
+                }
+                else if (result == -1) {
+                    ru.code = "2033";
+                    ru.success = "false";
+                    ru.message = "此手机号已注册过";
                 }
                 else
                 {
