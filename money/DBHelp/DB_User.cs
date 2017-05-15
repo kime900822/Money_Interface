@@ -109,9 +109,10 @@ namespace Money_Interface.DBHelp
                             return -1;
                         }
                     }
-                        cmd.CommandText = string.Format(@"update T_USER set PASS_WORD='{0}',BALANCE={1},PHONE=N'{2}',NAME='{3}',MONTH_IN={4},YEAR_IN={5},MONTH_OUT={6},YEAR_OUT={7}, TELEPHONE='{8}' where id='{9}' ",
-                      u.pass_word, Convert.ToDecimal(u.balance),u.phone,u.name,Convert.ToDecimal(u.month_in), Convert.ToDecimal(u.month_out), Convert.ToDecimal(u.year_in), Convert.ToDecimal(u.year_out), u.telephone,u.id);
-                        return cmd.ExecuteNonQuery();
+                    //  cmd.CommandText = string.Format(@"update T_USER set PASS_WORD='{0}',BALANCE={1},PHONE=N'{2}',NAME='{3}',MONTH_IN={4},YEAR_IN={5},MONTH_OUT={6},YEAR_OUT={7}, TELEPHONE='{8}' where id='{9}' ",
+                    //u.pass_word, Convert.ToDecimal(u.balance),u.phone,u.name,Convert.ToDecimal(u.month_in), Convert.ToDecimal(u.month_out), Convert.ToDecimal(u.year_in), Convert.ToDecimal(u.year_out), u.telephone,u.id);
+                    cmd.CommandText = string.Format(@"update T_USER set PASS_WORD='{0}', TELEPHONE='{1}' where id='{2}' ",u.pass_word, u.telephone, u.id);
+                    return cmd.ExecuteNonQuery();
 
                 }
 
