@@ -43,10 +43,13 @@ namespace money.DBHelp
                             a.id = DateTime.Now.ToString("yyyyMMdd") + "0001";
                         }
 
+
+                        cmd.CommandText = string.Format(@"insert into T_AD (ID,TITLE,CONTENT,UID) VALUES ('{0}',N'{1}',N'{2}','{3}')",
+                  a.id, a.title, a.content, a.uid);
                         int r = cmd.ExecuteNonQuery();
                         if (r == 1)
                         {
-                            cmd.CommandText = string.Format(@"UPDATE T_USER set BALANCE=BALANCE-10 where TELEPHONE='{0}')", a.uid);
+                            cmd.CommandText = string.Format(@"UPDATE T_USER set BALANCE=BALANCE-10 where TELEPHONE='{0}' ", a.uid);
                             cmd.ExecuteNonQuery();
                             transaction.Commit();
                         }

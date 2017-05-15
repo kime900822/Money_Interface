@@ -86,7 +86,7 @@ namespace Money_Interface.DBHelp
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
 
-                        cmd.CommandText = string.Format(@"update T_USER set PASS_WORD='{0}',BALANCE={1},PHONE=N'{2}',NAME='{3}',MONTH_IN={4},YEAR_IN={5},MONTH_OUT={6},YEAR_OUT={7} where TELEPHONE='{8}')",
+                        cmd.CommandText = string.Format(@"update T_USER set PASS_WORD='{0}',BALANCE={1},PHONE=N'{2}',NAME='{3}',MONTH_IN={4},YEAR_IN={5},MONTH_OUT={6},YEAR_OUT={7} where TELEPHONE='{8}' ",
                       u.pass_word, Convert.ToDecimal(u.balance),u.phone,u.name,Convert.ToDecimal(u.month_in), Convert.ToDecimal(u.month_out), Convert.ToDecimal(u.year_in), Convert.ToDecimal(u.year_out), u.telephone);
                         return cmd.ExecuteNonQuery();
 
@@ -109,7 +109,7 @@ namespace Money_Interface.DBHelp
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
 
-                        cmd.CommandText = string.Format(@"delete T_USER where TELEPHONE='{0}')",
+                        cmd.CommandText = string.Format(@"delete T_USER where TELEPHONE='{0}' ",
                       u.telephone);
                         return cmd.ExecuteNonQuery();
 

@@ -98,3 +98,4 @@ D:\visual studio 2015\Projects\Money_Interface\money\bin\zh-Hans\System.Web.Http
 D:\visual studio 2015\Projects\Money_Interface\money\obj\Release\money.dll
 D:\visual studio 2015\Projects\Money_Interface\money\obj\Release\money.pdb
 D:\visual studio 2015\Projects\Money_Interface\money\obj\Release\money.csprojResolveAssemblyReference.cache
+D:\visual studio 2015\Projects\Money_Interface\money\bin\Qiniu.dll

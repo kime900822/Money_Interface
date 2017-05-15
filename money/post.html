@@ -8,14 +8,54 @@
     <script type="text/javascript">
 
     
-        function post() {
+        function deleteUser() {
             var url = $("#url").val();
             var data = $("#data").val();
             $.ajax({
                 type: 'POST',
                 async: false,
-                url: "http://localhost:49916/api/Product/queryProduct_date",
-                data: { date: '2017-05-12', type: 'month' },
+                url: "http://localhost:49916/api/User/deleteUser",
+                data: { telephone: '13758129145' },
+                dataType: "json",
+                success: function (result) {
+                    alert(result.message)
+                    $("#span").html(result);
+                },
+                error: function (e) {
+                    alert(e.responseText);
+                }
+            });
+
+        }
+
+        function insertAdd() {
+            var url = $("#url").val();
+            var data = $("#data").val();
+            $.ajax({
+                type: 'POST',
+                async: false,
+                url: "http://localhost:49916/api/Add/insertAdd",
+                data: { amount: '100.00', uid: '13777777777', type: '支付宝1' },
+                dataType: "json",
+                success: function (result) {
+                    alert(result.message)
+                    $("#span").html(result);
+                },
+                error: function (e) {
+                    alert(e.responseText);
+                }
+            });
+
+        }
+
+        function insertAd() {
+            var url = $("#url").val();
+            var data = $("#data").val();
+            $.ajax({
+                type: 'POST',
+                async: false,
+                url: "http://localhost:49916/api/Ad/insertAd",
+                data: { content: '刚刚', uid: '13777777777', title: '银行发广告' },
                 dataType: "json",
                 success: function (result) {
                     alert(result.message)
@@ -29,15 +69,63 @@
         }
 
 
+        function queryProduct_date() {
+            var url = $("#url").val();
+            var data = $("#data").val();
+            $.ajax({
+                type: 'POST',
+                async: false,
+                url: "http://localhost:49916/api/Product/queryProduct_date",
+                data: { date:'2017',type:'year',uid:'88888888888'},
+                dataType: "json",
+                success: function (result) {
+                    alert(result.message)
+                    $("#span").html(result);
+                },
+                error: function (e) {
+                    alert(e.responseText);
+                }
+            });
+
+        }
+
+
+        function uploadToken() {
+            var url = $("#url").val();
+            var data = $("#data").val();
+            $.ajax({
+                type: 'POST',
+                async: false,
+                url: "http://localhost:49916/api/QINIUToken/uploadToken",
+                data: {  },
+                dataType: "json",
+                success: function (result) {
+                    alert(result.message);
+                    alert(result.data)
+                    $("#span").html(result);
+                },
+                error: function (e) {
+                    alert(e.responseText);
+                }
+            });
+
+        }
 
     </script>
 </head>
 <body>
-    <p>输入请求地址</p>
-    <input type="text" id="url" /><br />
-    <p>输入请求参数</p>
-    <input type="text" id="data" /><br />
-    <input type="button" id="button" value="发送" onclick="post()" />
-    <span id="span"></span>
+    <span>USER</span><br />
+    <input type="button"  value="deleteUser" onclick="deleteUser()" /><br />
+    <span>ADD</span><br />
+    <input type="button"  value="insertAdd" onclick="insertAdd()" /><br />
+    <span>AD</span><br />
+    <input type="button"  value="insertAd" onclick="insertAd()" /><br />
+    <span>CUSTOMER</span><br />
+    <span>PRODUCT</span><br />
+    <input type="button"  value="queryProduct_date" onclick="queryProduct_date()" /><br />
+    <span>CREDIT</span><br />
+    <span>TOKEN</span><br />
+    <input type="button"  value="uploadToken" onclick="uploadToken()" /><br />
+    <span id="span"></span><br />
 </body>
 </html>

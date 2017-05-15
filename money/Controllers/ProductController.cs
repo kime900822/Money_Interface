@@ -165,12 +165,12 @@ namespace money.Controllers
         [Route("queryProduct_date")]
         public HttpResponseMessage queryProduct_date([FromBody]PRODUCT_DATE_PARAMETER  p)
         {
-            Result<PRODUCT> ru = new Result<PRODUCT>();
-            List<PRODUCT> lproduct = new List<PRODUCT>();
+            Result<PRODUCT_DATE_R> ru = new Result<PRODUCT_DATE_R>();
+            List<PRODUCT_DATE_R> lproduct = new List<PRODUCT_DATE_R>();
 
             try
             {
-                lproduct = DB_Product.getProduct(p.date,p.type);
+                lproduct = DB_Product.getProduct(p);
 
                 if (lproduct.Count > 0)
                 {

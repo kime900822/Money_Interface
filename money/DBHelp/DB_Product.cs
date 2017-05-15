@@ -143,25 +143,26 @@ namespace Money_Interface.DBHelp
         /// <param name="date"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static List<PRODUCT> getProduct(string date,string type)
+        public static List<PRODUCT_DATE_R> getProduct(PRODUCT_DATE_PARAMETER p)
         {
             using (SqlConnection conn = new SqlConnection(Conn.connString))
             {
                 conn.Open();
                 string sqlwhere ;
-                if (type == "month")
+                if (p.type == "month")
                 {
-                    sqlwhere = string.Format(@" SUBSTRING(DATE,1,7) = '{0}'", date.Substring(0,7));
+                    sqlwhere = string.Format(@" SUBSTRING(A.DATE,1,7) = '{0}'", p.date);
                 }
                 else {
-                    sqlwhere = string.Format(@" SUBSTRING(DATE,1,4) = '{0}'", date.Substring(0, 4));
+                    sqlwhere = string.Format(@" SUBSTRING(A.DATE,1,4) = '{0}'", p.date);
                 }
+                sqlwhere += string.Format(@" AND A.UID='{0}'", p.uid);
 
-                string sql = string.Format("select * from T_PRODUCT where ID IN (SELECT DISTINCT PID FROM T_CREDIT WHERE {0})", sqlwhere);
+                string sql = string.Format("select B.UID,B.NAME,B.PRICE,SUM(COUNT) AS NUM from T_CREDIT A LEFT JOIN T_PRODUCT B ON A.PID=B.ID WHERE {0} GROUP BY B.UID,B.NAME,B.PRICE ", sqlwhere);
                 DataTable dt = new DataTable();
                 SqlDataAdapter da = new SqlDataAdapter(sql, conn);
                 da.Fill(dt);
-                return DataToProduct(dt);
+                return DataToProductR(dt);
 
 
 
@@ -207,6 +208,28 @@ namespace Money_Interface.DBHelp
                         name= dt.Rows[i]["NAME"].ToString(),
                         price = dt.Rows[i]["PRICE"].ToString(),
                         uid=dt.Rows[i]["UID"].ToString()
+                    };
+                    list.Add(d);
+                }
+            }
+            return list;
+
+        }
+
+
+        public static List<PRODUCT_DATE_R> DataToProductR(DataTable dt)
+        {
+            List<PRODUCT_DATE_R> list = new List<PRODUCT_DATE_R>();
+            if (dt.Rows.Count > 0)
+            {
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    PRODUCT_DATE_R d = new PRODUCT_DATE_R
+                    {
+                        num = dt.Rows[i]["NUM"].ToString(),
+                        name = dt.Rows[i]["NAME"].ToString(),
+                        price = dt.Rows[i]["PRICE"].ToString(),
+                        uid = dt.Rows[i]["UID"].ToString()
                     };
                     list.Add(d);
                 }
