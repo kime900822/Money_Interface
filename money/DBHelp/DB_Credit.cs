@@ -95,6 +95,32 @@ namespace money.DBHelp
         }
 
 
+        public static string getTotalAmount(string type,string inout,string uid)
+        {
+            using (SqlConnection conn = new SqlConnection(Conn.connString))
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    string sqlwhere = "";
+                    if (type == "month")
+                    {
+                        sqlwhere += string.Format(@" WHERE SUBSTRING(DATE,1,7) = '{0}'", DateTime.Now.ToString("yyyy-MM"));
+                    }
+                    else {
+                        sqlwhere += string.Format(@" WHERE SUBSTRING(DATE,1,4) = '{0}'", DateTime.Now.ToString("yyyy"));
+                    }
+                    sqlwhere += string.Format(" AND ACCOUNTTYPE='{0}' AND UID='{1}'", inout,uid);
+
+                    cmd.CommandText = string.Format(@"select SUM(AMOUNT) FROM T_CREDIT {0}",sqlwhere);
+                    return cmd.ExecuteScalar().ToString();
+
+                }
+
+            }
+
+        }
+
 
         /// <summary>
         /// 获取产品

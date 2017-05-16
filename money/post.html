@@ -19,6 +19,7 @@
                 dataType: "json",
                 success: function (result) {
                     alert(result.message)
+                    alert(result.data)
                     $("#span").html(result);
                 },
                 error: function (e) {
@@ -27,6 +28,57 @@
             });
 
         }
+        
+        function getTotalAmount() {
+            var url = $("#url").val();
+            var data = $("#data").val();
+            $.ajax({
+                type: 'POST',
+                async: false,
+                url: "http://localhost:49916/api/User/getTotalAmount",
+                data: { id: '201705160003' },
+                dataType: "json",
+                success: function (result) {
+                    alert(result.message)
+                    alert(result.data)
+                    $("#span").html(result);
+                },
+                error: function (e) {
+                    alert(e.responseText);
+                }
+            });
+
+        }
+
+
+
+        function login() {
+            var url = $("#url").val();
+            var data = $("#data").val();
+            $.ajax({
+                type: 'POST',
+                async: false,
+                url: "http://localhost:49916/api/User/login",
+                data: { telephone: '14444444446', pass_word: '666666' },
+                dataType: "json",
+                success: function (result) {
+                    alert(result.message)
+                    alert(result.data)
+                    $("#span").html(result);
+                },
+                error: function (e) {
+                    alert(e.responseText);
+                }
+            });
+
+        }
+
+
+
+
+
+
+
 
         function modUser() {
             var url = $("#url").val();
@@ -39,6 +91,7 @@
                 dataType: "json",
                 success: function (result) {
                     alert(result.message)
+                    alert(result.data)
                     $("#span").html(result);
                 },
                 error: function (e) {
@@ -59,6 +112,7 @@
                 dataType: "json",
                 success: function (result) {
                     alert(result.message)
+                    alert(result.data)
                     $("#span").html(result);
                 },
                 error: function (e) {
@@ -79,6 +133,7 @@
                 dataType: "json",
                 success: function (result) {
                     alert(result.message)
+                    alert(result.data)
                     $("#span").html(result);
                 },
                 error: function (e) {
@@ -89,17 +144,18 @@
         }
 
 
-        function queryProduct_date() {
+        function queryProduct_year() {
             var url = $("#url").val();
             var data = $("#data").val();
             $.ajax({
                 type: 'POST',
                 async: false,
                 url: "http://localhost:49916/api/Product/queryProduct_date",
-                data: { date:'2017',type:'year',uid:'88888888888'},
+                data: { date: '2017', type: 'year', uid: '13758126666' },
                 dataType: "json",
                 success: function (result) {
                     alert(result.message)
+                    alert(result.data)
                     $("#span").html(result);
                 },
                 error: function (e) {
@@ -108,6 +164,30 @@
             });
 
         }
+
+
+
+        function queryProduct_month() {
+            var url = $("#url").val();
+            var data = $("#data").val();
+            $.ajax({
+                type: 'POST',
+                async: false,
+                url: "http://localhost:49916/api/Product/queryProduct_date",
+                data: { date: '2017-05', type: 'month', uid: '201705160001' },
+                dataType: "json",
+                success: function (result) {
+                    alert(result.message)
+                    alert(result.data)
+                    $("#span").html(result);
+                },
+                error: function (e) {
+                    alert(e.responseText);
+                }
+            });
+
+        }
+
 
 
         function uploadToken() {
@@ -137,13 +217,16 @@
     <span>USER</span><br />
     <input type="button"  value="deleteUser" onclick="deleteUser()" /><br />
     <input type="button"  value="modUser" onclick="modUser()" /><br />
+    <input type="button"  value="login" onclick="login()" /><br />
+    <input type="button"  value="getTotalAmount" onclick="getTotalAmount()" /><br />
     <span>ADD</span><br />
     <input type="button"  value="insertAdd" onclick="insertAdd()" /><br />
     <span>AD</span><br />
     <input type="button"  value="insertAd" onclick="insertAd()" /><br />
     <span>CUSTOMER</span><br />
     <span>PRODUCT</span><br />
-    <input type="button"  value="queryProduct_date" onclick="queryProduct_date()" /><br />
+    <input type="button"  value="queryProduct_year" onclick="queryProduct_year()" /><br />
+    <input type="button"  value="queryProduct_month" onclick="queryProduct_month()" /><br />
     <span>CREDIT</span><br />
     <span>TOKEN</span><br />
     <input type="button"  value="uploadToken" onclick="uploadToken()" /><br />

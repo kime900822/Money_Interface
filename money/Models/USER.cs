@@ -14,10 +14,10 @@ namespace Money_Interface.Models
         public string phone { get; set; }
         public string name { get; set; }
         public decimal balance { get; set; }
-        public decimal month_in { get; set; }
-        public decimal year_in { get; set; }
-        public decimal month_out { get; set; }
-        public decimal year_out { get; set; }
+        public string month_in { get; set; }
+        public string year_in { get; set; }
+        public string month_out { get; set; }
+        public string year_out { get; set; }
 
     }
 

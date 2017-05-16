@@ -54,6 +54,62 @@ namespace Money_Interface.Controllers
             return Conn.toJson(ru);
         }
 
+
+        [HttpPost]
+        [Route("getTotalAmount")]
+        public HttpResponseMessage getTotalAmount([FromBody]USER u)
+        {
+            Result<USER> ru = new Result<USER>();
+
+            USER ou = new USER();
+            List<USER> result = new List<USER>();
+
+            try
+            {
+                result = DB_User.getTotalAmount(u);
+
+                if (result.Count >0 )
+                {
+                    ru.code = "2050";
+                    ru.success = "true";
+                    ru.message = "获取成功！";
+                }
+                else
+                {
+                    ru.code = "2051";
+                    ru.success = "false";
+                    ru.message = "无资料";
+                }
+            }
+            catch (Exception e)
+            {
+                ru.code = "2052";
+                ru.success = "false";
+                ru.message = e.Message;
+            }
+
+
+            ru.systemTime = Conn.GetTimeStamp();
+            ru.data = result;
+
+            return Conn.toJson(ru);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         [HttpPost]
         [Route("register")]
         public HttpResponseMessage register([FromBody]USER u)

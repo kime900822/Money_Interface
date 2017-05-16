@@ -1,4 +1,5 @@
-﻿using Money_Interface.Models;
+﻿using money.DBHelp;
+using Money_Interface.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -121,7 +122,19 @@ namespace Money_Interface.DBHelp
         }
 
 
+        public static List<USER> getTotalAmount(USER u)
+        {
+            using (SqlConnection conn = new SqlConnection(Conn.connString))
+            {
+                string sql = string.Format("select * from T_USER WHERE ID ='{0}' ",u.id);
+                DataTable dt = new DataTable();
+                SqlDataAdapter da = new SqlDataAdapter(sql, conn);
+                da.Fill(dt);
+                return DataToUser(dt);
 
+            }
+
+        }
 
 
 
@@ -154,7 +167,7 @@ namespace Money_Interface.DBHelp
                 conn.Open();
 
 
-                        string sql = string.Format("select * from T_USER");
+                        string sql = string.Format("select * from T_USER WHERE ID <>'0'");
                         DataTable dt = new DataTable();
                         SqlDataAdapter da = new SqlDataAdapter(sql, conn);
                         da.Fill(dt);
@@ -180,14 +193,14 @@ namespace Money_Interface.DBHelp
                     {
                         telephone = dt.Rows[i]["TELEPHONE"].ToString(),
                         pass_word = dt.Rows[i]["PASS_WORD"].ToString(),
-                        balance= Convert.ToDecimal(dt.Rows[i]["BALANCE"].ToString()),
-                        phone= dt.Rows[i]["PHONE"].ToString(),
-                        name= dt.Rows[i]["NAME"].ToString(),
-                        month_in = Convert.ToDecimal(dt.Rows[i]["MONTH_IN"].ToString()),
-                        year_in = Convert.ToDecimal(dt.Rows[i]["YEAR_IN"].ToString()),
-                        month_out = Convert.ToDecimal(dt.Rows[i]["MONTH_OUT"].ToString()),
-                        year_out = Convert.ToDecimal(dt.Rows[i]["YEAR_OUT"].ToString()),
-                        id= dt.Rows[i]["ID"].ToString(),
+                        balance = Convert.ToDecimal(dt.Rows[i]["BALANCE"].ToString()),
+                        phone = dt.Rows[i]["PHONE"].ToString(),
+                        name = dt.Rows[i]["NAME"].ToString(),
+                        month_in = DB_Credit.getTotalAmount("month", "收入", dt.Rows[i]["ID"].ToString()),
+                        year_in = DB_Credit.getTotalAmount("year", "收入", dt.Rows[i]["ID"].ToString()),
+                        month_out = DB_Credit.getTotalAmount("month", "支出", dt.Rows[i]["ID"].ToString()),
+                        year_out = DB_Credit.getTotalAmount("year", "支出", dt.Rows[i]["ID"].ToString()),
+                        id = dt.Rows[i]["ID"].ToString(),
                     };
                     list.Add(d);
                 }
