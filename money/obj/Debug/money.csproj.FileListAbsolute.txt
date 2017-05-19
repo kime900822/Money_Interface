@@ -99,3 +99,6 @@ D:\visual studio 2015\Projects\Money_Interface\money\obj\Debug\money.dll
 D:\visual studio 2015\Projects\Money_Interface\money\obj\Debug\money.pdb
 D:\visual studio 2015\Projects\Money_Interface\money\bin\Qiniu.dll
 D:\visual studio 2015\Projects\Money_Interface\money\obj\Debug\money.csprojResolveAssemblyReference.cache
+Z:\CODE\C#\Money_Interface\money\obj\Debug\money.csprojResolveAssemblyReference.cache
+Z:\CODE\C#\Money_Interface\money\obj\Debug\money.dll
+Z:\CODE\C#\Money_Interface\money\obj\Debug\money.pdb

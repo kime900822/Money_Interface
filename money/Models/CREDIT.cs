@@ -21,4 +21,11 @@ namespace money.Models
         public PRODUCT product { get; set; }
 
     }
+
+    public class CREDIT_QUERY {
+        public string type { get; set; }
+        public string date { get; set; }
+        public string uname { get; set; }
+        public string uid { get; set; }
+    }
 }

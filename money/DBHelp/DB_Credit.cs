@@ -145,6 +145,36 @@ namespace money.DBHelp
 
         }
 
+        /// <summary>
+        /// 查询
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        public static List<CREDIT> getCredit_query(CREDIT_QUERY c)
+        {
+            using (SqlConnection conn = new SqlConnection(Conn.connString))
+            {
+                conn.Open();
+                string sql = "";
+                if (c.type == "date")
+                {
+                    sql = string.Format("select * from T_CREDIT where UID='{0}' AND DATE='{1}' ", c.uid, c.date);
+                }
+                else {
+                    sql = string.Format("select A.* from T_CREDIT A LEFT JOIN T_CUSTOMER B ON A.CID=B.ID where A.UID='{0}' AND B.NAME='{1}' ", c.uid, c.uname);
+                }
+                DataTable dt = new DataTable();
+                SqlDataAdapter da = new SqlDataAdapter(sql, conn);
+                da.Fill(dt);
+                return DataToCredit(dt);
+
+
+
+            }
+
+        }
+
+
         public static List<CREDIT> DataToCredit(DataTable dt)
         {
             List<CREDIT> list = new List<CREDIT>();

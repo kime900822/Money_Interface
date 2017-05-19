@@ -163,5 +163,43 @@ namespace money.Controllers
             return Conn.toJson(ru);
         }
 
+
+
+        [HttpPost]
+        [Route("queryCredit_date")]
+        public HttpResponseMessage queryCredit_date([FromBody]CREDIT_QUERY c)
+        {
+            Result<CREDIT> ru = new Result<CREDIT>();
+            List<CREDIT> lcustomer = new List<CREDIT>();
+
+            try
+            {
+                lcustomer = DB_Credit.getCredit_query(c);
+
+                if (lcustomer.Count > 0)
+                {
+                    ru.code = "7040";
+                    ru.success = "true";
+                    ru.message = "获取成功！";
+                }
+                else
+                {
+                    ru.code = "7041";
+                    ru.success = "false";
+                    ru.message = "无数据";
+                }
+            }
+            catch (Exception e)
+            {
+                ru.code = "7042";
+                ru.success = "false";
+                ru.message = e.Message;
+            }
+
+            ru.systemTime = Conn.GetTimeStamp();
+            ru.data = lcustomer;
+
+            return Conn.toJson(ru);
+        }
     }
 }
